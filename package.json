@@ -1,0 +1,77 @@
+{
+  "name": "cu_cloud_cabinet",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@reduxjs/toolkit": "1.9.5",
+    "axios": "^1.6.8",
+    "dayjs": "^1.11.11",
+    "final-form": "^4.20.10",
+    "react": "18.2.0",
+    "react-datepicker": "^6.9.0",
+    "react-dom": "18.2.0",
+    "react-final-form": "^6.5.9",
+    "react-focus-lock": "^2.12.1",
+    "react-redux": "8.1.3",
+    "react-router-dom": "6.14.0",
+    "react-scripts": "5.0.1",
+    "react-toastify": "9.1.3",
+    "styled-components": "6.1.9",
+    "typescript": "5.0.4"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@testing-library/jest-dom": "5.16.5",
+    "@testing-library/react": "12.1.5",
+    "@testing-library/user-event": "12.8.3",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.68",
+    "@types/react": "^18.2.43",
+    "@types/react-datepicker": "^6.2.0",
+    "@types/react-dom": "^18.2.17",
+    "@types/styled-components": "^5.1.34",
+    "babel-plugin-styled-components": "^2.1.4",
+    "eslint": "^8.55.0",
+    "eslint-config-prettier": "^8.10.0",
+    "eslint-config-htmlacademy": "^9.1.1",
+    "eslint-plugin-react-refresh": "0.4.1",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-jest-dom": "^5.1.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "eslint-plugin-storybook": "^0.6.15",
+    "eslint-plugin-testing-library": "^6.2.0",
+    "jest-styled-components": "^7.2.0",
+    "postcss-styled-syntax": "^0.5.0",
+    "prettier": "^3.1.1",
+    "prop-types": "^15.8.1",
+    "stylelint": "^16.0.2",
+    "stylelint-config-recess-order": "^4.4.0",
+    "stylelint-config-standard": "^35.0.0",
+    "webpack": "^5.89.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --watchAll=false --detectOpenHandles",
+    "eject": "react-scripts eject",
+    "stylelint": "stylelint \"**/*.styled.(ts|tsx)\"",
+    "stylelint:fix": "stylelint --fix \"**/*.styled.(ts|tsx)\""
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
