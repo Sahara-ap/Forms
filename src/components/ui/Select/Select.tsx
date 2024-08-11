@@ -17,18 +17,16 @@ export const Select: React.FC<ISelectProps> = ({
   onChange,
 }) => {
   const [isOpened, setIsOpened] = useState(false);
-  const [isSelectClick, setIsSelectClick] = useState(false)
   const selectButtonRef = useRef<HTMLButtonElement>(null);
 
-  console.log('isOpened', isOpened, 'isSelectClick', isSelectClick)
+  console.log('isOpened', isOpened)
 
   const activeItem = getSelectItemByValue(items, currentValue);
   const maxMenuHeight = useMaxMenuHeight(isOpened, selectButtonRef);
 
   const handleSelectButtonClick = (event: React.MouseEvent) => {
-    // event.stopPropagation();
+    event.stopPropagation();
     setIsOpened(true);
-    setIsSelectClick(true);
   }
   const handleItemClick = (newValue: string) => {
     if (newValue !== currentValue) {
@@ -37,13 +35,10 @@ export const Select: React.FC<ISelectProps> = ({
   };
   const closeMenu = () => {
     setIsOpened(false);
-    setIsSelectClick(false);
   }
 
-  useEffect(() => setIsSelectClick(false), [isOpened])
-
   useCloseByEsc({ isShown: isOpened, cb: closeMenu });
-  useCloseByClick({isSelectClick: isSelectClick,  isShown: isOpened, cb: closeMenu});
+  useCloseByClick({isShown: isOpened, cb: closeMenu});
 
   return (
     <S.SelectContainer className={className}>
