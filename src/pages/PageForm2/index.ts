@@ -1,1 +1,1 @@
-export {PageForm2} from './Form2';
+export {PageForm2} from './PageForm2';
