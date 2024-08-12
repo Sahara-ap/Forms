@@ -11,6 +11,8 @@ import { AppRoute } from 'utils/route/AppRoute';
 import { useNavigate } from 'react-router-dom';
 import { composeValidators } from 'utils/validators/compose-validators';
 import { isRequired } from 'utils/validators/is-required';
+import { hasExactLength } from 'utils/validators/has-exact-length';
+import { TEL_LENGTH } from 'utils/validators/constants/validation.constants';
 
 interface IForm1Values {
   firstName: string;
@@ -63,6 +65,7 @@ export const PageForm1: React.FC = () => {
               <S.Form1Wrapper>
                 <Field
                   name="firstname"
+                  validate={composeValidators([isRequired])}
 
                 >
                   {({ input, meta }) => (
@@ -81,7 +84,7 @@ export const PageForm1: React.FC = () => {
                 </Field>
                 <Field
                   name="lastname"
-
+                  validate={composeValidators([isRequired])}
                 >
                   {({ input, meta }) => (
                     <S.InputLabel>
@@ -98,7 +101,9 @@ export const PageForm1: React.FC = () => {
                   )}
                 </Field>
 
-                <Field name="sex" >
+                <Field
+                  name="sex"
+                >
                   {({ input, meta }) => (
                     <S.SexLabel>
                       <S.LabelText>Пол</S.LabelText>
@@ -116,7 +121,10 @@ export const PageForm1: React.FC = () => {
                     </S.SexLabel>
                   )}
                 </Field>
-                <Field name="tel" >
+                <Field
+                  name="tel"
+                  validate={composeValidators([isRequired, hasExactLength(TEL_LENGTH)])}
+                >
                   {({ input, meta }) => (
                     <S.InputLabel>
                       <S.LabelText>Телефон</S.LabelText>
@@ -144,6 +152,7 @@ export const PageForm1: React.FC = () => {
               variant="borderless"
               text="Далее"
               onSubmit={handleSubmit}
+              disabled={pristine || (submitFailed && hasValidationErrors)}
             />
           </S.Form>
         )}
