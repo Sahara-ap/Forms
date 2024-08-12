@@ -1,29 +1,35 @@
-import { Form, Field } from 'react-final-form';
-
-import * as S from './Form1.styled';
-import { Input } from 'components/ui/Input';
-import { Select } from 'components/ui/Select';
-import { useEffect, useState } from 'react';
-import { FormApi } from 'final-form';
-import { formatTelNumber } from 'utils/formatters/format-tel-number';
-import { Button } from 'components/ui/Button';
-import { AppRoute } from 'utils/route/AppRoute';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Form, Field } from 'react-final-form';
+import { FormApi } from 'final-form';
+
+import { useAppDispatch } from 'store/store';
+import { setForm1ElementsAction } from 'store/form1-reducer/form1.reducer';
+import { formatTelNumber } from 'utils/formatters/format-tel-number';
 import { composeValidators } from 'utils/validators/compose-validators';
 import { isRequired } from 'utils/validators/is-required';
+import { AppRoute } from 'utils/route/AppRoute';
 import { hasExactLength } from 'utils/validators/has-exact-length';
-import { TEL_LENGTH } from 'utils/validators/constants/validation.constants';
 
-interface IForm1Values {
-  firstName: string;
-  lastName: string;
-  sex: string;
-  tel: string;
-}
+import { Input } from 'components/ui/Input';
+import { Select } from 'components/ui/Select';
+import { Button } from 'components/ui/Button';
+
+import { selectForm1Data } from 'store/form1-reducer/form1.selectors';
+import { IForm1Values } from './types/form1-values.interface';
+
+import { TEL_LENGTH } from 'utils/validators/constants/validation.constants';
+import * as S from './Form1.styled';
+
+
 
 export const PageForm1: React.FC = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [selectValue, setSelectValue] = useState('man');
+
+  const form1data = useSelector(selectForm1Data);
+  const [selectValue, setSelectValue] = useState(form1data.sex);
 
   const handleSelectChange = (
     value: string,
@@ -42,22 +48,22 @@ export const PageForm1: React.FC = () => {
   };
 
   const handleFormSubmit = (values: IForm1Values) => {
+    dispatch(setForm1ElementsAction(values));
     navigate(AppRoute.Form2())
   };
 
   useEffect(() => {
-    setSelectValue('man');
-  }, []);
+    setSelectValue(form1data.sex);
+  }, [form1data]);
 
   return (
     <>
-      <Form onSubmit={handleFormSubmit}>
+      <Form onSubmit={handleFormSubmit} initialValues={form1data}>
         {({
           handleSubmit,
           submitFailed,
           hasValidationErrors,
           form,
-          pristine,
         }) => (
           <S.Form onSubmit={handleSubmit} $isFailed={submitFailed}>
             <S.FormSection>
@@ -103,6 +109,7 @@ export const PageForm1: React.FC = () => {
 
                 <Field
                   name="sex"
+                  validate={composeValidators([isRequired])}
                 >
                   {({ input, meta }) => (
                     <S.SexLabel>
@@ -118,6 +125,9 @@ export const PageForm1: React.FC = () => {
                           handleSelectChange(newValue, form)
                         }
                       />
+                      {meta.error && submitFailed && (
+                        <S.ErrorText>{meta.error}</S.ErrorText>
+                      )}
                     </S.SexLabel>
                   )}
                 </Field>
@@ -152,7 +162,7 @@ export const PageForm1: React.FC = () => {
               variant="borderless"
               text="Далее"
               onSubmit={handleSubmit}
-              disabled={pristine || (submitFailed && hasValidationErrors)}
+              disabled={submitFailed && hasValidationErrors}
             />
           </S.Form>
         )}
