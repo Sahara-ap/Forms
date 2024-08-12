@@ -20,7 +20,7 @@ import { selectForm1Data } from 'store/form1-reducer/form1.selectors';
 import { IForm1Values } from './types/form1-values.interface';
 
 import { TEL_LENGTH } from 'utils/validators/constants/validation.constants';
-import * as S from './Form1.styled';
+import * as S from './PageForm1.styled';
 
 
 
