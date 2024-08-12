@@ -61,7 +61,7 @@ export const SelectButton = styled.button<{ $isActive: boolean }>`
     }
   }
 
-  & > svg:last-of-type {
+  & > svg {
     position: absolute;
     top: 50%;
     right: 12px;
@@ -151,10 +151,6 @@ export const MenuButton = styled.button`
   transition: all ${TransitionTime.Hover};
   cursor: pointer;
   outline: none;
-
-  & > svg {
-    flex-shrink: 0;
-  }
 
   &:hover,
   &:focus {

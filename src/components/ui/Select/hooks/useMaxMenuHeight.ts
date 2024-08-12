@@ -14,7 +14,7 @@ export const useMaxMenuHeight = (
   useEffect(() => {
     if (isOpened && selectButtonRef.current) {
       const selectButtonRect = selectButtonRef.current.getBoundingClientRect();
-      const pageHeight = document.body.offsetHeight;
+      const pageHeight = document.body.scrollHeight;
       const availableSpace = pageHeight - selectButtonRect.bottom - window.scrollY;
       setMaxMenuHeight(availableSpace - BOTTOM_DROPDOWN_OFFSET_PIXELS);
     }

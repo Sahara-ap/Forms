@@ -1,4 +1,5 @@
-import { useEffect, useLayoutEffect } from 'react';
+import { useEffect } from 'react';
+
 
 export const useCloseByClick = ({isShown, cb }: {isShown: boolean; cb: () => void}): void => {
   useEffect(() => {

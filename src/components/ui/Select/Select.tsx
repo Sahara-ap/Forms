@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { ReactComponent as ArrowDown } from 'assets/select-icons/caret-down.svg';
 import { useCloseByClick } from 'hooks/useCloseByClick';
 import { useCloseByEsc } from 'hooks/useCloseByEsc';
@@ -19,23 +19,23 @@ export const Select: React.FC<ISelectProps> = ({
   const [isOpened, setIsOpened] = useState(false);
   const selectButtonRef = useRef<HTMLButtonElement>(null);
 
-  console.log('isOpened', isOpened)
-
   const activeItem = getSelectItemByValue(items, currentValue);
   const maxMenuHeight = useMaxMenuHeight(isOpened, selectButtonRef);
 
   const handleSelectButtonClick = (event: React.MouseEvent) => {
     event.stopPropagation();
-    setIsOpened(true);
-  }
+      setIsOpened((prev) => !prev);
+  };
+
   const handleItemClick = (newValue: string) => {
     if (newValue !== currentValue) {
       onChange(newValue);
     }
   };
+
   const closeMenu = () => {
-    setIsOpened(false);
-  }
+      setIsOpened(false);
+  };
 
   useCloseByEsc({ isShown: isOpened, cb: closeMenu });
   useCloseByClick({isShown: isOpened, cb: closeMenu});
