@@ -30,6 +30,7 @@ export const FormSection = styled.section`
   flex-direction: column;
   gap: 24px;
   width: 100%;
+  min-height: 254px;
 
 
   @media (max-width: ${BreakPoint.MobileTop}) {
@@ -60,6 +61,7 @@ export const Form1Wrapper = styled.div`
   @media (max-width: ${BreakPoint.MobileTop}) {
     min-height: 76px;
     grid-template-columns: 1fr;
+    gap: 0;
   }
 `;
 
@@ -67,7 +69,7 @@ export const InputLabel = styled.label`
   display: flex;
   flex-direction: column;
   gap: 4px;
-  min-height: 90px;
+  min-height: 80px;
 `;
 
 export const LabelText = styled(SText)`
@@ -96,4 +98,11 @@ export const ErrorText = styled(SText)`
   letter-spacing: 0.3px;
   text-transform: uppercase;
   color: #ec494f;
+`;
+
+export const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: end;
+  width: 100%;
+  padding: 20px 10px;
 `;

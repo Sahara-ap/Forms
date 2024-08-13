@@ -21,9 +21,9 @@ import { Button } from 'components/ui/Button';
 
 import { IForm2Values } from './types/form2-values.interface';
 
-import * as S from './PageForm2.styled';
+import * as S from './PageForm3.styled';
 
-export const PageForm2: React.FC = () => {
+export const PageForm3: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -41,7 +41,7 @@ export const PageForm2: React.FC = () => {
 
   const handleFormSubmit = (values: IForm2Values) => {
     dispatch(setForm2ElementsAction(values));
-    navigate(AppRoute.Form3());
+    // navigate(AppRoute.Form3());
   };
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export const PageForm2: React.FC = () => {
         {({ handleSubmit, submitFailed, hasValidationErrors, form }) => (
           <S.Form onSubmit={handleSubmit} $isFailed={submitFailed}>
             <S.FormSection>
-              <S.FormSectionTitle>Form2</S.FormSectionTitle>
+              <S.FormSectionTitle>Form3</S.FormSectionTitle>
               <S.FormWrapper>
                 <Field
                   name="workplace"
@@ -106,7 +106,7 @@ export const PageForm2: React.FC = () => {
                 type="button"
                 variant="borderless"
                 text="Назад"
-                onClick={() => navigate(AppRoute.Form1())}
+                onClick={() => navigate(AppRoute.Form2())}
               />
 
               <Button

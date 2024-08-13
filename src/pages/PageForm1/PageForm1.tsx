@@ -154,14 +154,15 @@ export const PageForm1: React.FC = () => {
                 </Field>
               </S.Form1Wrapper>
             </S.FormSection>
-
-            <Button
-              type="submit"
-              variant="borderless"
-              text="Далее"
-              onSubmit={handleSubmit}
-              disabled={submitFailed && hasValidationErrors}
-            />
+            <S.ButtonWrapper>
+              <Button
+                type="submit"
+                variant="borderless"
+                text="Далее"
+                onSubmit={handleSubmit}
+                disabled={submitFailed && hasValidationErrors}
+              />
+            </S.ButtonWrapper>
           </S.Form>
         )}
       </Form>
