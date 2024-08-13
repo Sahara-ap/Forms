@@ -8,6 +8,7 @@ import { InnerHeader } from './components/InnerHeader';
 import { MainMenu } from './components/MainMenu';
 import { Popup } from 'components/ui/Popup';
 
+import { selectForm1Data } from 'store/form1-reducer/form1.selectors';
 import { closePopupAction } from 'store/modals-reducer/modals.reducer';
 import { selectIsFinishApplyOpened } from 'store/modals-reducer/modals.selectors';
 import { BreakPoint } from 'styles/style-variables/breakpoint';
@@ -17,6 +18,7 @@ import * as S from './InnerLayout.styled';
 export const InnerLayout: React.FC = () => {
   const dispatch = useDispatch();
 
+  const { firstname, lastname } = useSelector(selectForm1Data);
   const isFinishApplyOpened = useSelector(selectIsFinishApplyOpened);
   const [isMainMenuOpened, setIsMainMenuOpened] = useState(false);
 
@@ -62,7 +64,7 @@ export const InnerLayout: React.FC = () => {
 
       {isFinishApplyOpened && (
         <Popup
-          title="Поздравляем"
+          title={`Поздравляем ${lastname} ${firstname}`}
           content={<FinishApplyContent />}
           handlePopupClose={handleFinishPopupClose}
 

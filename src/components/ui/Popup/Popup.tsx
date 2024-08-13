@@ -1,4 +1,4 @@
-import React, { RefObject, useContext, useRef } from 'react';
+import React, { RefObject, useRef } from 'react';
 import ReactFocusLock from 'react-focus-lock';
 import { ReactComponent as CloseIcon } from 'assets/close-large.svg';
 import { useBlockContentScroll } from 'hooks/useBlockContentScroll';

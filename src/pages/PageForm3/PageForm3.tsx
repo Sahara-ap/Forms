@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Form, Field } from 'react-final-form';
 import { FormApi } from 'final-form';
 
@@ -59,6 +59,11 @@ export const PageForm3: React.FC = () => {
       onSuccessCb: () => dispatch(openFinishApplyPopupAction()),
     }))
   };
+
+  useEffect(() => {
+    setMoneyValue(form3data['money-value']);
+    setMoneyTerm(form3data['money-term']);
+  }, [form3data])
 
   return (
     <>

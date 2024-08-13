@@ -67,9 +67,13 @@ export const Title = styled.h2`
   line-height: 24px;
   text-align: left;
   color: #272727;
+  word-break: break-word;
 `;
 
 export const CloseButton = styled(Button)`
+  width: 24px;
+  height: 24px;
+
   & svg path {
     fill: #272727;
   }
