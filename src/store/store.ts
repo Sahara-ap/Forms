@@ -2,10 +2,12 @@ import { useDispatch } from 'react-redux';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import { form1Reducer } from './form1-reducer/form1.reducer';
+import { form2Reducer } from './form2-reducer/form2.reducer';
 
 
 const rootReducer = combineReducers({
   form1Reducer,
+  form2Reducer,
 });
 
 export const store = configureStore({

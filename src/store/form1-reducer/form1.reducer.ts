@@ -1,8 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { IForm1Values } from 'pages/PageForm1/types/form1-values.interface';
 
-
-
 export interface IForm1State {
   form1Elements: IForm1Values;
 }
