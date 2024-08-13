@@ -23,7 +23,6 @@ import { TEL_LENGTH } from 'utils/validators/constants/validation.constants';
 import * as S from './PageForm1.styled';
 
 
-
 export const PageForm1: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();

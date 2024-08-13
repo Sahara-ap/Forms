@@ -7,6 +7,10 @@ import { App } from './App';
 import { store } from 'store/store';
 import { ResetStyles } from 'styles/ResetStyles';
 import { GlobalStyles } from 'styles/GlobalStyles';
+import { ToastProvider } from 'components/ToastProvider';
+
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -17,7 +21,9 @@ root.render(
       <ResetStyles />
       <GlobalStyles />
       <BrowserRouter>
+      <ToastProvider>
         <App />
+      </ToastProvider>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,
