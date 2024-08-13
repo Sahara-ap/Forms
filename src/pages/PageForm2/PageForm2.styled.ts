@@ -97,3 +97,11 @@ export const ErrorText = styled(SText)`
   text-transform: uppercase;
   color: #ec494f;
 `;
+
+export const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  width: 100%;
+  padding: 20px 10px;
+`;
