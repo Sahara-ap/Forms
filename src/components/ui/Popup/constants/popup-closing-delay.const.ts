@@ -1,0 +1,1 @@
+export const POPUP_CLOSING_DELAY = 2000;

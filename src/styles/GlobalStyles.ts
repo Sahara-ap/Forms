@@ -45,9 +45,10 @@ export const GlobalStyles = createGlobalStyle`
     .Toastify__close-button, .Toastify__toast-icon {
         display: none;
     }
-    
+
     .no-scroll {
       overflow: hidden;
+      padding-right: 17px;
     }
 
     @media only screen and (width <= ${BreakPoint.MobileTop}) {

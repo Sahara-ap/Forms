@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { useInnerWidth } from 'hooks/useInnerWidth';
 
+import { FinishApplyContent } from 'components/FinishApplyContent';
 import { InnerHeader } from './components/InnerHeader';
+import { MainMenu } from './components/MainMenu';
+import { Popup } from 'components/ui/Popup';
 
+import { closePopupAction } from 'store/modals-reducer/modals.reducer';
+import { selectIsFinishApplyOpened } from 'store/modals-reducer/modals.selectors';
 import { BreakPoint } from 'styles/style-variables/breakpoint';
 
-import { MainMenu } from './components/MainMenu';
 import * as S from './InnerLayout.styled';
 
 export const InnerLayout: React.FC = () => {
+  const dispatch = useDispatch();
+
+  const isFinishApplyOpened = useSelector(selectIsFinishApplyOpened);
   const [isMainMenuOpened, setIsMainMenuOpened] = useState(false);
 
   const closeMainMenu = () => {
@@ -25,6 +33,10 @@ export const InnerLayout: React.FC = () => {
     event.stopPropagation()
     setIsMainMenuOpened(false);
   };
+
+  const handleFinishPopupClose = () => {
+    dispatch(closePopupAction())
+  }
 
   const { innerWidth, innerWidthWithoutScrollBar } = useInnerWidth();
   const sideSpace =
@@ -47,6 +59,16 @@ export const InnerLayout: React.FC = () => {
       <S.ContentWrapper $sideSpace={sideSpace >= 0 ? sideSpace : 0}>
         <Outlet />
       </S.ContentWrapper>
+
+      {isFinishApplyOpened && (
+        <Popup
+          title="Поздравляем"
+          content={<FinishApplyContent />}
+          handlePopupClose={handleFinishPopupClose}
+
+        />
+      )}
+
     </S.Wrapper>
   );
 };
