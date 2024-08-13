@@ -1,0 +1,1 @@
+export { MenuLogo } from './MenuLogo';

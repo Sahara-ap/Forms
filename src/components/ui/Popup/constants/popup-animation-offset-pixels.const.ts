@@ -1,0 +1,1 @@
+export const POPUP_ANIMATION_OFFSET_PIXELS = 12;
