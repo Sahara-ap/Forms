@@ -1,4 +1,4 @@
-export interface IForm2Values {
-  workplace: string;
-  address: string;
+export interface IForm3Values {
+  'money-value': string;
+  'money-term': string;
 }
