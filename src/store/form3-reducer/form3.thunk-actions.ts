@@ -7,15 +7,15 @@ import { notifyError } from 'utils/notify/notify.utils';
 
 export const postFinishApplyThunkAction = createAsyncThunk(
   'form3/postFinishApply',
-  async({body, onSuccessCb}: {body:IFinishApplyRequestBody, onSuccessCb: () => void}): Promise<IFinishApplyResponse> => {
+  async ({body, onSuccessCb,}: {body: IFinishApplyRequestBody;onSuccessCb: () => void;}): Promise<IFinishApplyResponse> => {
     return await requestFinishApply(body)
       .then((res) => {
         onSuccessCb();
         return res;
       })
       .catch((error) => {
-        notifyError('Sorry can\'t handle your request at this moment');
+        notifyError("Sorry can't handle your request at this moment");
         throw error;
       });
-  }
+  },
 );

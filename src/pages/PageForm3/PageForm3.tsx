@@ -1,26 +1,26 @@
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Form, Field } from 'react-final-form';
 import { FormApi } from 'final-form';
 
-import { useAppDispatch } from 'store/store';
-
-import { fetchWorkPlacesThunkAction } from 'store/form2-reducer/form2.thunk-actions';
-import { composeValidators } from 'utils/validators/compose-validators';
-import { isRequired } from 'utils/validators/is-required';
-import { AppRoute } from 'utils/route/AppRoute';
-
 import { Button } from 'components/ui/Button';
 
-import * as S from './PageForm3.styled';
+import { useAppDispatch } from 'store/store';
 import { openFinishApplyPopupAction } from 'store/modals-reducer/modals.reducer';
-import { isGreaterOrEqual } from 'utils/validators/is-greater-or-equal';
-import { IForm3Values } from './types/form2-values.interface';
 import { selectForm3Data } from 'store/form3-reducer/form3.selectors';
 import { setForm3ElementsAction } from 'store/form3-reducer/form3.reducer';
 import { postFinishApplyThunkAction } from 'store/form3-reducer/form3.thunk-actions';
 import { selectForm1Data } from 'store/form1-reducer/form1.selectors';
+
+import { composeValidators } from 'utils/validators/compose-validators';
+import { isRequired } from 'utils/validators/is-required';
+import { AppRoute } from 'utils/route/AppRoute';
+import { isGreaterOrEqual } from 'utils/validators/is-greater-or-equal';
+
+import { IForm3Values } from './types/form2-values.interface';
+
+import * as S from './PageForm3.styled';
 
 export const PageForm3: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -59,9 +59,6 @@ export const PageForm3: React.FC = () => {
       onSuccessCb: () => dispatch(openFinishApplyPopupAction()),
     }))
   };
-
-
-
 
   return (
     <>
