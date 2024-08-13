@@ -5,76 +5,90 @@ import { Form, Field } from 'react-final-form';
 import { FormApi } from 'final-form';
 
 import { useAppDispatch } from 'store/store';
-import { setForm2ElementsAction } from 'store/form2-reducer/form2.reducer';
-import {
-  selectForm2Data,
-  selectWorkPlaces,
-} from 'store/form2-reducer/form2.selectors';
+
 import { fetchWorkPlacesThunkAction } from 'store/form2-reducer/form2.thunk-actions';
 import { composeValidators } from 'utils/validators/compose-validators';
 import { isRequired } from 'utils/validators/is-required';
 import { AppRoute } from 'utils/route/AppRoute';
 
-import { Input } from 'components/ui/Input';
-import { Select } from 'components/ui/Select';
 import { Button } from 'components/ui/Button';
 
-import { IForm2Values } from './types/form2-values.interface';
-
 import * as S from './PageForm3.styled';
+import { openFinishApplyPopupAction } from 'store/modals-reducer/modals.reducer';
+import { isGreaterOrEqual } from 'utils/validators/is-greater-or-equal';
+import { IForm3Values } from './types/form2-values.interface';
+import { selectForm3Data } from 'store/form3-reducer/form3.selectors';
+import { setForm3ElementsAction } from 'store/form3-reducer/form3.reducer';
+import { postFinishApplyThunkAction } from 'store/form3-reducer/form3.thunk-actions';
+import { selectForm1Data } from 'store/form1-reducer/form1.selectors';
 
 export const PageForm3: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const form2data = useSelector(selectForm2Data);
-  const workplaces = useSelector(selectWorkPlaces);
-  const [selectValue, setSelectValue] = useState(form2data.workplace);
+  const form3data = useSelector(selectForm3Data);
+  const {firstname, lastname} = useSelector(selectForm1Data);
 
-  const handleSelectChange = (
+  const [moneyValue, setMoneyValue] = useState('0');
+  const [moneyTerm, setMoneyTerm] = useState('0');
+
+  const handleMoneyValueChange = (
     value: string,
-    form: FormApi<IForm2Values, Partial<IForm2Values>>,
+    form: FormApi<IForm3Values, Partial<IForm3Values>>,
   ) => {
-    setSelectValue(value);
-    form.change('workplace', value);
+    setMoneyValue(value);
+    form.change('money-value', value);
   };
 
-  const handleFormSubmit = (values: IForm2Values) => {
-    dispatch(setForm2ElementsAction(values));
-    // navigate(AppRoute.Form3());
+  const handleMoneyTermChange = (
+    value: string,
+    form: FormApi<IForm3Values, Partial<IForm3Values>>,
+  ) => {
+    setMoneyTerm(value)
+    form.change('money-term', value);
   };
 
-  useEffect(() => {
-    setSelectValue(form2data.workplace);
-  }, [form2data]);
+  const handleFormSubmit = (values: IForm3Values) => {
+    dispatch(setForm3ElementsAction(values));
+    const body = {
+      title: `${firstname} ${lastname}`,
+    };
 
-  useEffect(() => {
-    dispatch(fetchWorkPlacesThunkAction());
-  }, [dispatch]);
+    dispatch(postFinishApplyThunkAction({
+      body,
+      onSuccessCb: () => dispatch(openFinishApplyPopupAction()),
+    }))
+  };
+
+
+
 
   return (
     <>
-      <Form onSubmit={handleFormSubmit} initialValues={form2data}>
+      <Form onSubmit={handleFormSubmit} initialValues={form3data}>
         {({ handleSubmit, submitFailed, hasValidationErrors, form }) => (
           <S.Form onSubmit={handleSubmit} $isFailed={submitFailed}>
             <S.FormSection>
               <S.FormSectionTitle>Form3</S.FormSectionTitle>
               <S.FormWrapper>
+
                 <Field
-                  name="workplace"
-                  validate={composeValidators([isRequired])}
+                  name="money-value"
+                  validate={composeValidators([isRequired, isGreaterOrEqual(1)])}
                 >
                   {({ input, meta }) => (
                     <S.InputLabel>
-                      <S.LabelText>Место работы</S.LabelText>
-                      <Select
+                      <S.LabelText>Сумма займа</S.LabelText>
+                      <input
                         {...input}
-                        items={workplaces}
-                        currentValue={selectValue}
-                        onChange={(newValue) =>
-                          handleSelectChange(newValue, form)
-                        }
+                        type="range"
+                        min={0}
+                        max={100}
+                        step={1}
+                        onChange={(evt) => handleMoneyValueChange(evt.currentTarget.value, form)}
                       />
+                      <S.InputRangeValue>{`${moneyValue} тыс руб`}</S.InputRangeValue>
+
                       {meta.error && submitFailed && (
                         <S.ErrorText>{meta.error}</S.ErrorText>
                       )}
@@ -82,17 +96,22 @@ export const PageForm3: React.FC = () => {
                   )}
                 </Field>
                 <Field
-                  name="address"
-                  validate={composeValidators([isRequired])}
+                  name="money-term"
+                  validate={composeValidators([isRequired, isGreaterOrEqual(1)])}
                 >
                   {({ input, meta }) => (
                     <S.InputLabel>
-                      <S.LabelText>Адрес</S.LabelText>
-                      <Input
-                        {...input}
-                        type="text"
-                        hasErrors={meta.error && submitFailed}
-                      />
+                      <S.LabelText>Срок займа</S.LabelText>
+                        <input
+                          {...input}
+                          type="range"
+                          min={0}
+                          max={120}
+                          step={1}
+                          onChange={(evt) => handleMoneyTermChange(evt.currentTarget.value, form)}
+                        />
+                      <S.InputRangeValue>{`${moneyTerm} месяцев`}</S.InputRangeValue>
+
                       {meta.error && submitFailed && (
                         <S.ErrorText>{meta.error}</S.ErrorText>
                       )}

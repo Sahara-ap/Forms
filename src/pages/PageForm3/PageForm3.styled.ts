@@ -70,6 +70,10 @@ export const InputLabel = styled.label`
   flex-direction: column;
   gap: 4px;
   min-height: 80px;
+
+  & input[type="range"] {
+    color: black;
+  }
 `;
 
 export const LabelText = styled(SText)`
@@ -87,6 +91,19 @@ export const LabelText = styled(SText)`
     letter-spacing: 0.3px;
   }
 `;
+
+export const  InputRangeValue = styled.div`
+  align-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+
+  font-size: 20px;
+  line-height: 24px;
+  color: #49494a;
+`;
+
 
 export const ErrorText = styled(SText)`
   font-size: 10px;
