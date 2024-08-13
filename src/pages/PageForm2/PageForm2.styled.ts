@@ -52,7 +52,7 @@ export const FormSectionTitle = styled.h2`
   }
 `;
 
-export const Form1Wrapper = styled.div`
+export const FormWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 25px;

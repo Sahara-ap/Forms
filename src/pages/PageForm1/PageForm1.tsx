@@ -35,7 +35,6 @@ export const PageForm1: React.FC = () => {
     value: string,
     form: FormApi<IForm1Values, Partial<IForm1Values>>,
   ) => {
-    console.log(value);
     setSelectValue(value);
     form.change('sex', value);
   };

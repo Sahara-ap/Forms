@@ -49,21 +49,19 @@ export const Select: React.FC<ISelectProps> = ({
         disabled={isDisabled}
         type="button"
       >
-        {activeItem?.icon && activeItem.icon}
         {activeItem?.text && <S.SelectButtonText>{activeItem?.text}</S.SelectButtonText>}
         <ArrowDown />
       </S.SelectButton>
 
       <S.SelectMenu $isOpened={isOpened} $maxMenuHeight={maxMenuHeight}>
         <S.MenuList $itemsLength={items.length} $isOpened={isOpened}>
-          {items.map(({ icon, text, value }) => (
+          {items.map(({ text, value }) => (
             <S.MenuItem key={value}>
               <S.MenuButton
                 type="button"
                 onClick={() => handleItemClick(value)}
                 tabIndex={isOpened ? 0 : -1}
               >
-                {icon && icon}
                 {text && (
                   <S.MenuButtonText $isActive={value === currentValue} $isOpened={isOpened}>
                     {text}

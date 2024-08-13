@@ -4,157 +4,94 @@ import { useEffect, useState } from 'react';
 import { Form, Field } from 'react-final-form';
 import { FormApi } from 'final-form';
 
-import { formatTelNumber } from 'utils/formatters/format-tel-number';
+import { setForm2ElementsAction } from 'store/form2-reducer/form2.reducer';
+import { selectForm2Data, selectWorkPlaces } from 'store/form2-reducer/form2.selectors';
+import { useAppDispatch } from 'store/store';
 import { composeValidators } from 'utils/validators/compose-validators';
 import { isRequired } from 'utils/validators/is-required';
 import { AppRoute } from 'utils/route/AppRoute';
-import { hasExactLength } from 'utils/validators/has-exact-length';
 
 import { Input } from 'components/ui/Input';
 import { Select } from 'components/ui/Select';
 import { Button } from 'components/ui/Button';
 
-import { selectForm1Data } from 'store/form1-reducer/form1.selectors';
-import { IForm1Values } from './types/form2-values.interface';
+import { IForm2Values } from './types/form2-values.interface';
 
-import { TEL_LENGTH } from 'utils/validators/constants/validation.constants';
 import * as S from './PageForm2.styled';
-import { useAppDispatch } from 'store/store';
-import { setForm1ElementsAction } from 'store/form1-reducer/form1.reducer';
-
-
+import { fetchWorkPlacesThunkAction } from 'store/form2-reducer/form2.thunk-actions';
 
 export const PageForm2: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const form1data = useSelector(selectForm1Data);
-  const [selectValue, setSelectValue] = useState(form1data.sex);
+  const form2data = useSelector(selectForm2Data);
+  const workplaces = useSelector(selectWorkPlaces);
+  const [selectValue, setSelectValue] = useState(form2data.workplace);
 
   const handleSelectChange = (
     value: string,
-    form: FormApi<IForm1Values, Partial<IForm1Values>>,
+    form: FormApi<IForm2Values, Partial<IForm2Values>>,
   ) => {
-    console.log(value);
     setSelectValue(value);
-    form.change('sex', value);
+    form.change('workplace', value);
   };
 
-  const handleTelChange = (
-    userTelValue: string,
-    form: FormApi<IForm1Values, Partial<IForm1Values>>,
-  ) => {
-    form.change('tel', formatTelNumber(userTelValue));
-  };
-
-  const handleFormSubmit = (values: IForm1Values) => {
-    dispatch(setForm1ElementsAction(values));
-    navigate(AppRoute.Form3())
+  const handleFormSubmit = (values: IForm2Values) => {
+    dispatch(setForm2ElementsAction(values));
+    navigate(AppRoute.Form3());
   };
 
   useEffect(() => {
-    setSelectValue(form1data.sex);
-  }, [form1data]);
+    setSelectValue(form2data.workplace);
+  }, [form2data]);
+
+  useEffect(() => {
+    dispatch(fetchWorkPlacesThunkAction())
+  },[dispatch]);
 
   return (
     <>
-      <Form onSubmit={handleFormSubmit} initialValues={form1data}>
-        {({
-          handleSubmit,
-          submitFailed,
-          hasValidationErrors,
-          form,
-        }) => (
+      <Form onSubmit={handleFormSubmit} initialValues={form2data}>
+        {({ handleSubmit, submitFailed, hasValidationErrors, form }) => (
           <S.Form onSubmit={handleSubmit} $isFailed={submitFailed}>
             <S.FormSection>
               <S.FormSectionTitle>Form2</S.FormSectionTitle>
-              <S.Form1Wrapper>
-                <Field
-                  name="firstname"
-                  validate={composeValidators([isRequired])}
-
-                >
-                  {({ input, meta }) => (
-                    <S.InputLabel>
-                      <S.LabelText>Имя</S.LabelText>
-                      <Input
-                        {...input}
-                        type="text"
-                        hasErrors={meta.error && submitFailed}
-                      />
-                      {meta.error && submitFailed && (
-                        <S.ErrorText>{meta.error}</S.ErrorText>
-                      )}
-                    </S.InputLabel>
-                  )}
-                </Field>
-                <Field
-                  name="lastname"
-                  validate={composeValidators([isRequired])}
-                >
-                  {({ input, meta }) => (
-                    <S.InputLabel>
-                      <S.LabelText>Фамилия</S.LabelText>
-                      <Input
-                        {...input}
-                        type="text"
-                        hasErrors={meta.error && submitFailed}
-                      />
-                      {meta.error && submitFailed && (
-                        <S.ErrorText>{meta.error}</S.ErrorText>
-                      )}
-                    </S.InputLabel>
-                  )}
-                </Field>
-
-                <Field
-                  name="sex"
-                  validate={composeValidators([isRequired])}
-                >
+              <S.FormWrapper>
+              <Field name="workplace" validate={composeValidators([isRequired])}>
                   {({ input, meta }) => (
                     <S.SexLabel>
-                      <S.LabelText>Пол</S.LabelText>
+                      <S.LabelText>Место работы</S.LabelText>
                       <Select
                         {...input}
-                        items={[
-                          { text: 'мужской', value: 'man' },
-                          { text: 'женский', value: 'woman' },
-                        ]}
+                        items={workplaces}
                         currentValue={selectValue}
                         onChange={(newValue) =>
                           handleSelectChange(newValue, form)
                         }
                       />
-                      {meta.error && submitFailed && (
-                        <S.ErrorText>{meta.error}</S.ErrorText>
-                      )}
+                      {meta.error && submitFailed && (<S.ErrorText>{meta.error}</S.ErrorText>)}
                     </S.SexLabel>
                   )}
                 </Field>
                 <Field
-                  name="tel"
-                  validate={composeValidators([isRequired, hasExactLength(TEL_LENGTH)])}
+                  name="address"
+                  validate={composeValidators([isRequired])}
                 >
                   {({ input, meta }) => (
                     <S.InputLabel>
-                      <S.LabelText>Телефон</S.LabelText>
+                      <S.LabelText>Адрес</S.LabelText>
                       <Input
                         {...input}
-                        type="tel"
-                        placeholder="0XXX XXX XXX"
-                        onChange={(event) =>
-                          handleTelChange(event.currentTarget.value, form)
-                        }
+                        type="text"
                         hasErrors={meta.error && submitFailed}
-                        autoComplete="off"
                       />
                       {meta.error && submitFailed && (
-                        <S.ErrorText>{meta.error}</S.ErrorText>
-                      )}
+                        <S.ErrorText>{meta.error}</S.ErrorText>)}
                     </S.InputLabel>
                   )}
                 </Field>
-              </S.Form1Wrapper>
+
+              </S.FormWrapper>
             </S.FormSection>
 
             <Button

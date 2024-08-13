@@ -1,6 +1,4 @@
-export interface IForm1Values {
-  firstname: string;
-  lastname: string;
-  sex: string;
-  tel: string;
+export interface IForm2Values {
+  workplace: string;
+  address: string;
 }
