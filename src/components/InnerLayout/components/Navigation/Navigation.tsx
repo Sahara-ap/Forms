@@ -5,9 +5,16 @@ import { navItems } from './constants/nav-items';
 
 import * as S from './Navigation.styled';
 import { NavigationItem } from '../NavigationItem';
+import { useCloseByClick } from 'hooks/useCloseByClick';
 
-export const Navigation: React.FC = () => {
+interface INavigationProps {
+  closeMainMenu: () => void;
+  isOpen: boolean;
+}
+export const Navigation: React.FC<INavigationProps> = ({closeMainMenu, isOpen}) => {
   const { pathname } = useLocation();
+
+  useCloseByClick({isShown:isOpen, cb:closeMainMenu});
 
   return (
     <S.NavWrapper as="nav">

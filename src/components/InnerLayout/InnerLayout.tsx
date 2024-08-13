@@ -12,11 +12,17 @@ import * as S from './InnerLayout.styled';
 export const InnerLayout: React.FC = () => {
   const [isMainMenuOpened, setIsMainMenuOpened] = useState(false);
 
-  const handleMainMenuOpen = (): void => {
+  const closeMainMenu = () => {
+    setIsMainMenuOpened(false);
+  };
+
+  const handleMainMenuOpen = (event: React.MouseEvent): void => {
+    event.stopPropagation()
     setIsMainMenuOpened(true);
   };
 
-  const handleMainMenuClosed = (): void => {
+  const handleMainMenuClosed = (event: React.MouseEvent): void => {
+    event.stopPropagation()
     setIsMainMenuOpened(false);
   };
 
@@ -34,7 +40,7 @@ export const InnerLayout: React.FC = () => {
       </S.HeaderWrapper>
       {(innerWidth >= parseInt(BreakPoint.DesktopLow) || isMainMenuOpened) && (
         <S.MenuWrapper $sideSpace={sideSpace >= 0 ? sideSpace : 0}>
-          <MainMenu />
+          <MainMenu closeMainMenu={closeMainMenu} isOpen={isMainMenuOpened}/>
         </S.MenuWrapper>
       )}
 
