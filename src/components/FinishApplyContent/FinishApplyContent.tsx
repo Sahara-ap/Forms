@@ -10,7 +10,7 @@ export const FinishApplyContent: React.FC = () => {
 
   return (
     <S.Container>
-      Вам одобрена сумма {moneyValue} тысячи руб  на {moneyTerm} дней.
+      Вам одобрена сумма {moneyValue} тысячи руб  на {moneyTerm} месяцев.
     </S.Container>
   );
 };
